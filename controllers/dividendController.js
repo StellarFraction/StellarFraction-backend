@@ -8,6 +8,29 @@ const getDividendHistory = (req, res) => {
   res.json(db.getDividendHistory());
 };
 
+// @desc    Preview proportional USDC dividend payouts without changing state
+// @route   POST /api/distribute/preview
+// @access  Public
+const previewDividends = (req, res) => {
+  const { propertyId, amountUSDC } = req.body;
+  const property = db.getPropertyById(propertyId);
+
+  if (!property) {
+    res.status(404);
+    throw new Error('Property not found');
+  }
+
+  const calculation = calculateDividendPayouts(db.getStakers(), amountUSDC);
+  res.json({
+    property: {
+      id: property.id,
+      name: property.name,
+      tokenCode: property.tokenCode
+    },
+    ...calculation
+  });
+};
+
 // @desc    Trigger proportional USDC dividend distribution to stakers
 // @route   POST /api/distribute
 // @access  Admin/Private
@@ -67,5 +90,6 @@ const distributeDividends = (req, res) => {
 
 module.exports = {
   getDividendHistory,
+  previewDividends,
   distributeDividends
 };
