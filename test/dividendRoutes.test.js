@@ -57,3 +57,16 @@ test('POST /api/distribute/preview rejects an unknown property', async () => {
 
   assert.equal(response.body.message, 'Property not found');
 });
+
+test('POST /api/distribute/preview does not mutate balances or history', async () => {
+  const balancesBefore = structuredClone(db.getStakers());
+  const historyBefore = structuredClone(db.getDividendHistory());
+
+  await request(app)
+    .post('/api/distribute/preview')
+    .send({ propertyId: 1, amountUSDC: 100 })
+    .expect(200);
+
+  assert.deepEqual(db.getStakers(), balancesBefore);
+  assert.deepEqual(db.getDividendHistory(), historyBefore);
+});
