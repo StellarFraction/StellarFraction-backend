@@ -57,7 +57,23 @@ This repository hosts the **Node.js Express application** that coordinates datab
 
 ### 3. Payout Transactions
 * **`GET /api/history`**: Retrieves history logs of USDC dividend distributions.
+* **`POST /api/distribute/preview`**: Previews proportional USDC payouts without changing balances or history.
 * **`POST /api/distribute`**: Triggers a dividend payout, distributing USDC to stakers proportionally inside the pool.
+
+#### Preview a dividend distribution
+
+Send a property and a positive USDC amount. Preview requests do not require an
+idempotency key because they never persist data.
+
+```bash
+curl -X POST http://localhost:5000/api/distribute/preview \
+  -H 'Content-Type: application/json' \
+  -d '{"propertyId":1,"amountUSDC":100}'
+```
+
+The response identifies the property, reports the eligible share total, and
+lists each staker's percentage and six-decimal USDC payout. The
+`totalDistributed` value always matches `amountUSDC` after rounding.
 
 ---
 

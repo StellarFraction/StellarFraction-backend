@@ -50,6 +50,12 @@ let dividendHistory = [
 
 let processedTransactions = new Set();
 
+const initialState = {
+  properties: structuredClone(properties),
+  stakers: structuredClone(stakers),
+  dividendHistory: structuredClone(dividendHistory)
+};
+
 module.exports = {
   getProperties: () => properties,
   getPropertyById: (id) => properties.find(p => p.id === parseInt(id)),
@@ -73,5 +79,11 @@ module.exports = {
   isTransactionProcessed: (idempotencyKey) => processedTransactions.has(idempotencyKey),
   markTransactionProcessed: (idempotencyKey) => {
     processedTransactions.add(idempotencyKey);
+  },
+  reset: () => {
+    properties = structuredClone(initialState.properties);
+    stakers = structuredClone(initialState.stakers);
+    dividendHistory = structuredClone(initialState.dividendHistory);
+    processedTransactions = new Set();
   }
 };
