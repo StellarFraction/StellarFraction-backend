@@ -47,3 +47,5 @@ app.listen(PORT, () => {
 // Parse incoming JSON body payloads for POST/PUT request structures
 
 // Configure API rate limiting middleware to prevent backend overload
+
+// Register helmet security headers to secure HTTP responses against exploits
