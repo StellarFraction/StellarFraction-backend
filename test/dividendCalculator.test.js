@@ -52,3 +52,11 @@ test('rejects malformed dividend amounts', () => {
     );
   }
 });
+
+test('failed payout calculations do not mutate staker state', () => {
+  const stakers = [{ id: 1, address: 'GONE', shares: 0, usdcBalance: 12 }];
+  const original = structuredClone(stakers);
+
+  assert.throws(() => calculateDividendPayouts(stakers, 10));
+  assert.deepEqual(stakers, original);
+});
