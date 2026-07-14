@@ -52,7 +52,7 @@ const distributeDividends = ({ propertyId, amountUSDC, idempotencyKey }) => {
     earnings = Math.round(earnings * 1e6) / 1e6;
 
     if (idx === stakersList.length - 1) {
-      earnings += amount - totalDistributed;
+      earnings = amount - totalDistributed;
     }
 
     totalDistributed += earnings;
