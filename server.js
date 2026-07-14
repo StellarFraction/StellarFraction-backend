@@ -101,3 +101,5 @@ app.listen(PORT, () => {
 // Setup server environment configuration validation checks on launch
 
 // Document Winston log rotation strategies for logs folder storage
+
+// Configure database deployment migration scripts documentation steps
