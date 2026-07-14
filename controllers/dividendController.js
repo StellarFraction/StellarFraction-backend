@@ -1,13 +1,13 @@
+const { listDividendHistory, distributeDividends: distribute } = require('../services/dividendService');
 const db = require('../config/db');
 const { calculateDividendPayouts } = require('../services/dividendCalculator');
 
-// @desc    Get dividend history logs
-// @route   GET /api/history
-// @access  Public
 const getDividendHistory = (req, res) => {
-  res.json(db.getDividendHistory());
+  res.json(listDividendHistory());
 };
 
+const distributeDividends = (req, res) => {
+  const result = distribute(req.body || {});
 // @desc    Preview proportional USDC dividend payouts without changing state
 // @route   POST /api/distribute/preview
 // @access  Public
@@ -82,9 +82,9 @@ const distributeDividends = (req, res) => {
   db.markTransactionProcessed(idempotencyKey);
 
   res.status(200).json({
-    message: `Successfully distributed ${amountUSDC} USDC for property: ${property.name}`,
-    log: newLog,
-    stakers: stakersList
+    message: `Successfully distributed ${result.log.amountUSDC} USDC for property: ${result.property.name}`,
+    log: result.log,
+    stakers: result.stakers
   });
 };
 
