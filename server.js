@@ -79,3 +79,5 @@ app.listen(PORT, () => {
 // Log success message when database client connects to server instance
 
 // Validate property creation payload parameters for required entries
+
+// Validate staker registration public keys formats before storage push
