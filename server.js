@@ -91,3 +91,5 @@ app.listen(PORT, () => {
 // Handle database transaction rollbacks in case of query execution errors
 
 // Create custom response structures returning standard API error formats
+
+// Setup Prometheus tracking indicators to gather performance metrics
