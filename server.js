@@ -41,3 +41,5 @@ app.listen(PORT, () => {
 // Main Express entry point - initializes HTTP routing and database setup
 
 // Register CORS middleware to allow cross-origin requests from frontend app
+
+// Load configuration parameters from dotenv environment variables setup
