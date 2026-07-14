@@ -30,6 +30,15 @@ app.get('/', (req, res) => {
   });
 });
 
+// Healthcheck Endpoint
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'UP',
+    timestamp: new Date()
+  });
+});
+
+
 // Centralized Error Middleware
 app.use(errorHandler);
 
