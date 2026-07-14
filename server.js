@@ -115,3 +115,5 @@ app.listen(PORT, () => {
 // Listen to smart contract staking event logs to update local databases
 
 // Query blockchain Horizon servers for ledger indexer synchronization
+
+// Verify JWT authentication headers to decrypt user credential states
