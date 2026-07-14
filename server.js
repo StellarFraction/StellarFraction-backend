@@ -111,3 +111,5 @@ app.listen(PORT, () => {
 // Setup email sender transport wrapper for dividend claim receipts
 
 // Detect incoming payment webhooks to coordinate balance sync schedules
+
+// Listen to smart contract staking event logs to update local databases
