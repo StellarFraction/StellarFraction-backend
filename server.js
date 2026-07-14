@@ -75,3 +75,5 @@ app.listen(PORT, () => {
 // Set allowed origins to domain list for strict CORS security config
 
 // Setup winston logging configurations to trace runtime server errors
+
+// Log success message when database client connects to server instance
