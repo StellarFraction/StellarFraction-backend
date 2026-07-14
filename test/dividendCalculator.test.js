@@ -9,3 +9,12 @@ test('allocates the full dividend to a single staker', () => {
 
   assert.equal(result.payouts[0].amountUSDC, 10);
 });
+
+test('allocates dividends in proportion to unequal shares', () => {
+  const result = calculateDividendPayouts([
+    { id: 1, address: 'GONE', shares: 1000 },
+    { id: 2, address: 'GTWO', shares: 3000 }
+  ], 100);
+
+  assert.deepEqual(result.payouts.map(payout => payout.amountUSDC), [25, 75]);
+});
