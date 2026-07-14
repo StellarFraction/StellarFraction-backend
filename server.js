@@ -63,3 +63,5 @@ app.listen(PORT, () => {
 // Handle uncaughtException and unhandledRejection events to prevent exit
 
 // Import dividend controller logic to handle distribution calculations
+
+// Import property controller logic to handle real estate catalog CRUD
