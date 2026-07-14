@@ -9,6 +9,12 @@ const calculateDividendPayouts = (stakers, amountUSDC) => {
   }
 
   const totalShares = stakers.reduce((total, staker) => total + staker.shares, 0);
+  if (!Number.isFinite(totalShares) || totalShares <= 0) {
+    const error = new Error('Cannot calculate dividends without eligible shares');
+    error.statusCode = 400;
+    throw error;
+  }
+
   const amountInMicroUSDC = Math.round(numericAmount * USDC_SCALE);
   const allocations = stakers.map(staker =>
     Math.floor(amountInMicroUSDC * staker.shares / totalShares)
