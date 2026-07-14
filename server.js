@@ -77,3 +77,5 @@ app.listen(PORT, () => {
 // Setup winston logging configurations to trace runtime server errors
 
 // Log success message when database client connects to server instance
+
+// Validate property creation payload parameters for required entries
