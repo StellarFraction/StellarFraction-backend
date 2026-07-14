@@ -1,0 +1,72 @@
+const test = require('node:test');
+const assert = require('node:assert/strict');
+const request = require('supertest');
+const app = require('../app');
+const db = require('../config/db');
+
+test.beforeEach(() => db.reset());
+
+test('GET /api/history returns dividend records', async () => {
+  const response = await request(app).get('/api/history').expect(200);
+
+  assert.equal(response.body.length, 2);
+  assert.equal(response.body[0].propertyId, 1);
+});
+
+test('POST /api/distribute requires authorization', async () => {
+  const response = await request(app)
+    .post('/api/distribute')
+    .send({ propertyId: 1, amountUSDC: 100, idempotencyKey: 'auth-test' })
+    .expect(401);
+
+  assert.equal(response.body.message, 'Missing or invalid authorization header');
+});
+
+test('POST /api/distribute credits exactly the requested amount', async () => {
+  const response = await request(app)
+    .post('/api/distribute')
+    .set('Authorization', 'Bearer test-admin')
+    .send({ propertyId: 1, amountUSDC: 100, idempotencyKey: 'exact-total' })
+    .expect(200);
+  const totalBalance = response.body.stakers.reduce(
+    (total, staker) => total + staker.usdcBalance,
+    0
+  );
+
+  assert.equal(totalBalance, 100);
+  assert.deepEqual(response.body.stakers.map(staker => staker.usdcBalance), [25, 75]);
+});
+
+test('POST /api/distribute/preview returns proportional payouts', async () => {
+  const response = await request(app)
+    .post('/api/distribute/preview')
+    .send({ propertyId: 1, amountUSDC: 100 })
+    .expect(200);
+
+  assert.equal(response.body.property.name, 'The Horizon Tower');
+  assert.equal(response.body.totalShares, 4000);
+  assert.equal(response.body.totalDistributed, 100);
+  assert.deepEqual(response.body.payouts.map(payout => payout.amountUSDC), [25, 75]);
+});
+
+test('POST /api/distribute/preview rejects an unknown property', async () => {
+  const response = await request(app)
+    .post('/api/distribute/preview')
+    .send({ propertyId: 999, amountUSDC: 100 })
+    .expect(404);
+
+  assert.equal(response.body.message, 'Property not found');
+});
+
+test('POST /api/distribute/preview does not mutate balances or history', async () => {
+  const balancesBefore = structuredClone(db.getStakers());
+  const historyBefore = structuredClone(db.getDividendHistory());
+
+  await request(app)
+    .post('/api/distribute/preview')
+    .send({ propertyId: 1, amountUSDC: 100 })
+    .expect(200);
+
+  assert.deepEqual(db.getStakers(), balancesBefore);
+  assert.deepEqual(db.getDividendHistory(), historyBefore);
+});
