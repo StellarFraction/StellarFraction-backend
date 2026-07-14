@@ -73,3 +73,5 @@ app.listen(PORT, () => {
 // Mock database interface setup for local developer workspace tests
 
 // Set allowed origins to domain list for strict CORS security config
+
+// Setup winston logging configurations to trace runtime server errors
