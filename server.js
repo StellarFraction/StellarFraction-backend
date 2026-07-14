@@ -105,3 +105,5 @@ app.listen(PORT, () => {
 // Configure database deployment migration scripts documentation steps
 
 // Setup healthcheck response parameters representing backend services
+
+// Mock SMS alerts helper interface to outline investor notifications
