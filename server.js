@@ -71,3 +71,5 @@ app.listen(PORT, () => {
 // Configure connection pools config for robust postgres client queries
 
 // Mock database interface setup for local developer workspace tests
+
+// Set allowed origins to domain list for strict CORS security config
