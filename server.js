@@ -103,3 +103,5 @@ app.listen(PORT, () => {
 // Document Winston log rotation strategies for logs folder storage
 
 // Configure database deployment migration scripts documentation steps
+
+// Setup healthcheck response parameters representing backend services
