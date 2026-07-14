@@ -48,6 +48,8 @@ let dividendHistory = [
   { id: 2, timestamp: new Date(Date.now() - 86400000 * 10).toISOString(), amountUSDC: 1200, propertyId: 2, txHash: '2a14...78ef' }
 ];
 
+let processedTransactions = new Set();
+
 module.exports = {
   getProperties: () => properties,
   getPropertyById: (id) => properties.find(p => p.id === parseInt(id)),
@@ -67,5 +69,9 @@ module.exports = {
   addDividendRecord: (record) => {
     dividendHistory.push(record);
     return record;
+  },
+  isTransactionProcessed: (idempotencyKey) => processedTransactions.has(idempotencyKey),
+  markTransactionProcessed: (idempotencyKey) => {
+    processedTransactions.add(idempotencyKey);
   }
 };
