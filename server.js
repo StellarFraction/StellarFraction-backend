@@ -45,3 +45,5 @@ app.listen(PORT, () => {
 // Load configuration parameters from dotenv environment variables setup
 
 // Parse incoming JSON body payloads for POST/PUT request structures
+
+// Configure API rate limiting middleware to prevent backend overload
