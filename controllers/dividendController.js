@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { calculateDividendPayouts } = require('../services/dividendCalculator');
 
 // @desc    Get dividend history logs
 // @route   GET /api/history
@@ -45,36 +46,15 @@ const distributeDividends = (req, res) => {
   };
   db.addDividendRecord(newLog);
 
-  // Proportional math logic (simulated Soroban contract indexer update)
-  let stakersList = db.getStakers();
-  const totalStaked = stakersList.reduce((acc, s) => acc + s.shares, 0);
-
-  if (totalStaked === 0) {
-    res.status(400);
-    throw new Error('Cannot distribute dividends: no stakers are currently invested in this property');
-  }
-
-  let totalDistributed = 0;
-  stakersList = stakersList.map((s, idx) => {
-    const shareFraction = s.shares / totalStaked;
-    let earnings = shareFraction * amountUSDC;
-
-    // Round to 6 decimal places (USDC precision)
-    earnings = Math.round(earnings * 1e6) / 1e6;
-
-    // Assign dust from rounding to last staker to ensure total matches amountUSDC
-    if (idx === stakersList.length - 1) {
-      const dust = amountUSDC - totalDistributed;
-      earnings += dust;
-    }
-
-    totalDistributed += earnings;
-
-    return {
-      ...s,
-      usdcBalance: s.usdcBalance + earnings
-    };
-  });
+  const stakers = db.getStakers();
+  const calculation = calculateDividendPayouts(stakers, amountUSDC);
+  const payoutsByStakerId = new Map(
+    calculation.payouts.map(payout => [payout.stakerId, payout.amountUSDC])
+  );
+  const stakersList = stakers.map(staker => ({
+    ...staker,
+    usdcBalance: staker.usdcBalance + payoutsByStakerId.get(staker.id)
+  }));
   db.updateStakers(stakersList);
 
   db.markTransactionProcessed(idempotencyKey);
