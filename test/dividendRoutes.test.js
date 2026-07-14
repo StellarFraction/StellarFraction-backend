@@ -21,3 +21,18 @@ test('POST /api/distribute requires authorization', async () => {
 
   assert.equal(response.body.message, 'Missing or invalid authorization header');
 });
+
+test('POST /api/distribute credits exactly the requested amount', async () => {
+  const response = await request(app)
+    .post('/api/distribute')
+    .set('Authorization', 'Bearer test-admin')
+    .send({ propertyId: 1, amountUSDC: 100, idempotencyKey: 'exact-total' })
+    .expect(200);
+  const totalBalance = response.body.stakers.reduce(
+    (total, staker) => total + staker.usdcBalance,
+    0
+  );
+
+  assert.equal(totalBalance, 100);
+  assert.deepEqual(response.body.stakers.map(staker => staker.usdcBalance), [25, 75]);
+});
