@@ -4,7 +4,7 @@ const calculateDividendPayouts = (stakers, amountUSDC) => ({
     stakerId: staker.id,
     address: staker.address,
     shares: staker.shares,
-    amountUSDC: 0
+    amountUSDC: stakers.length === 1 ? amountUSDC : 0
   }))
 });
 
