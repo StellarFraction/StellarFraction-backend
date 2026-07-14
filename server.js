@@ -51,3 +51,5 @@ app.listen(PORT, () => {
 // Register helmet security headers to secure HTTP responses against exploits
 
 // Define dividend history routes handler for client tracking queries
+
+// Define property catalog routing map to retrieve asset list data
