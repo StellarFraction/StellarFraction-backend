@@ -97,3 +97,5 @@ app.listen(PORT, () => {
 // Create Swagger auto-generated documentation endpoints mapping schema
 
 // Enable compression wrapper on response packets to reduce loaded size
+
+// Setup server environment configuration validation checks on launch
