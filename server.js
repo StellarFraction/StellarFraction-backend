@@ -37,3 +37,5 @@ app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`[StellarFraction Backend] Running on http://localhost:${PORT}`);
 });
+
+// Main Express entry point - initializes HTTP routing and database setup
