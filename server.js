@@ -57,3 +57,5 @@ app.listen(PORT, () => {
 // Define staker registry routing map to retrieve user share information
 
 // Set default port fallback value if no custom PORT variable is specified
+
+// Bind server connection listener to start serving API routes on network
