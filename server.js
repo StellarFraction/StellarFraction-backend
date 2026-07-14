@@ -43,3 +43,5 @@ app.listen(PORT, () => {
 // Register CORS middleware to allow cross-origin requests from frontend app
 
 // Load configuration parameters from dotenv environment variables setup
+
+// Parse incoming JSON body payloads for POST/PUT request structures
