@@ -59,3 +59,5 @@ app.listen(PORT, () => {
 // Set default port fallback value if no custom PORT variable is specified
 
 // Bind server connection listener to start serving API routes on network
+
+// Handle uncaughtException and unhandledRejection events to prevent exit
