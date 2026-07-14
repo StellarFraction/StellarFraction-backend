@@ -89,3 +89,5 @@ app.listen(PORT, () => {
 // Verify request signature checksums for payment webhook validation
 
 // Handle database transaction rollbacks in case of query execution errors
+
+// Create custom response structures returning standard API error formats
