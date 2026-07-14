@@ -95,3 +95,5 @@ app.listen(PORT, () => {
 // Setup Prometheus tracking indicators to gather performance metrics
 
 // Create Swagger auto-generated documentation endpoints mapping schema
+
+// Enable compression wrapper on response packets to reduce loaded size
