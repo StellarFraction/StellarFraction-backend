@@ -49,3 +49,5 @@ app.listen(PORT, () => {
 // Configure API rate limiting middleware to prevent backend overload
 
 // Register helmet security headers to secure HTTP responses against exploits
+
+// Define dividend history routes handler for client tracking queries
