@@ -81,3 +81,5 @@ app.listen(PORT, () => {
 // Validate property creation payload parameters for required entries
 
 // Validate staker registration public keys formats before storage push
+
+// Enforce admin permissions check middleware on property modification
