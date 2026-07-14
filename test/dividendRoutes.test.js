@@ -36,3 +36,15 @@ test('POST /api/distribute credits exactly the requested amount', async () => {
   assert.equal(totalBalance, 100);
   assert.deepEqual(response.body.stakers.map(staker => staker.usdcBalance), [25, 75]);
 });
+
+test('POST /api/distribute/preview returns proportional payouts', async () => {
+  const response = await request(app)
+    .post('/api/distribute/preview')
+    .send({ propertyId: 1, amountUSDC: 100 })
+    .expect(200);
+
+  assert.equal(response.body.property.name, 'The Horizon Tower');
+  assert.equal(response.body.totalShares, 4000);
+  assert.equal(response.body.totalDistributed, 100);
+  assert.deepEqual(response.body.payouts.map(payout => payout.amountUSDC), [25, 75]);
+});
