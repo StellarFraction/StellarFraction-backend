@@ -109,3 +109,5 @@ app.listen(PORT, () => {
 // Mock SMS alerts helper interface to outline investor notifications
 
 // Setup email sender transport wrapper for dividend claim receipts
+
+// Detect incoming payment webhooks to coordinate balance sync schedules
