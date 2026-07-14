@@ -12,3 +12,12 @@ test('GET /api/history returns dividend records', async () => {
   assert.equal(response.body.length, 2);
   assert.equal(response.body[0].propertyId, 1);
 });
+
+test('POST /api/distribute requires authorization', async () => {
+  const response = await request(app)
+    .post('/api/distribute')
+    .send({ propertyId: 1, amountUSDC: 100, idempotencyKey: 'auth-test' })
+    .expect(401);
+
+  assert.equal(response.body.message, 'Missing or invalid authorization header');
+});
