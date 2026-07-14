@@ -48,3 +48,12 @@ test('POST /api/distribute/preview returns proportional payouts', async () => {
   assert.equal(response.body.totalDistributed, 100);
   assert.deepEqual(response.body.payouts.map(payout => payout.amountUSDC), [25, 75]);
 });
+
+test('POST /api/distribute/preview rejects an unknown property', async () => {
+  const response = await request(app)
+    .post('/api/distribute/preview')
+    .send({ propertyId: 999, amountUSDC: 100 })
+    .expect(404);
+
+  assert.equal(response.body.message, 'Property not found');
+});
