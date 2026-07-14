@@ -107,3 +107,5 @@ app.listen(PORT, () => {
 // Setup healthcheck response parameters representing backend services
 
 // Mock SMS alerts helper interface to outline investor notifications
+
+// Setup email sender transport wrapper for dividend claim receipts
