@@ -39,17 +39,20 @@ const distributeDividends = (req, res) => {
   let stakersList = db.getStakers();
   const totalStaked = stakersList.reduce((acc, s) => acc + s.shares, 0);
 
-  if (totalStaked > 0) {
-    stakersList = stakersList.map(s => {
-      const shareFraction = s.shares / totalStaked;
-      const earnings = parseFloat((shareFraction * amountUSDC).toFixed(6));
-      return {
-        ...s,
-        usdcBalance: s.usdcBalance + earnings
-      };
-    });
-    db.updateStakers(stakersList);
+  if (totalStaked === 0) {
+    res.status(400);
+    throw new Error('Cannot distribute dividends: no stakers are currently invested in this property');
   }
+
+  stakersList = stakersList.map(s => {
+    const shareFraction = s.shares / totalStaked;
+    const earnings = parseFloat((shareFraction * amountUSDC).toFixed(6));
+    return {
+      ...s,
+      usdcBalance: s.usdcBalance + earnings
+    };
+  });
+  db.updateStakers(stakersList);
 
   res.status(200).json({
     message: `Successfully distributed ${amountUSDC} USDC for property: ${property.name}`,
