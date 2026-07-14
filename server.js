@@ -87,3 +87,5 @@ app.listen(PORT, () => {
 // Implement token mapping values to represent Stellar asset issuers
 
 // Verify request signature checksums for payment webhook validation
+
+// Handle database transaction rollbacks in case of query execution errors
