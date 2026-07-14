@@ -41,3 +41,14 @@ test('conserves the requested amount when rounding is required', () => {
 
   assert.equal(distributedMicroUSDC, 10_000_000);
 });
+
+test('rejects malformed dividend amounts', () => {
+  const stakers = [{ id: 1, address: 'GONE', shares: 1 }];
+
+  for (const amount of ['not-a-number', Infinity, -1, 0]) {
+    assert.throws(
+      () => calculateDividendPayouts(stakers, amount),
+      { message: 'amountUSDC must be a positive finite number' }
+    );
+  }
+});
