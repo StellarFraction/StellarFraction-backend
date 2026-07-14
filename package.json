@@ -1,0 +1,28 @@
+{
+  "name": "stellarfraction-backend",
+  "version": "1.0.0",
+  "description": "Node.js Express backend for the StellarFraction real estate platform",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^12.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "keywords": [
+    "stellar",
+    "soroban",
+    "realestate",
+    "dividends",
+    "yield"
+  ],
+  "author": "StellarFraction Contributors",
+  "license": "MIT"
+}
