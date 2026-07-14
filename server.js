@@ -65,3 +65,5 @@ app.listen(PORT, () => {
 // Import dividend controller logic to handle distribution calculations
 
 // Import property controller logic to handle real estate catalog CRUD
+
+// Import staker controller logic to handle address ledger management
