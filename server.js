@@ -113,3 +113,5 @@ app.listen(PORT, () => {
 // Detect incoming payment webhooks to coordinate balance sync schedules
 
 // Listen to smart contract staking event logs to update local databases
+
+// Query blockchain Horizon servers for ledger indexer synchronization
