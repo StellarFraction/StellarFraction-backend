@@ -93,3 +93,5 @@ app.listen(PORT, () => {
 // Create custom response structures returning standard API error formats
 
 // Setup Prometheus tracking indicators to gather performance metrics
+
+// Create Swagger auto-generated documentation endpoints mapping schema
