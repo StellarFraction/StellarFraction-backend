@@ -18,3 +18,12 @@ test('allocates dividends in proportion to unequal shares', () => {
 
   assert.deepEqual(result.payouts.map(payout => payout.amountUSDC), [25, 75]);
 });
+
+test('preserves six-decimal payouts below one cent', () => {
+  const result = calculateDividendPayouts([
+    { id: 1, address: 'GONE', shares: 1 },
+    { id: 2, address: 'GTWO', shares: 3 }
+  ], 0.000004);
+
+  assert.deepEqual(result.payouts.map(payout => payout.amountUSDC), [0.000001, 0.000003]);
+});
