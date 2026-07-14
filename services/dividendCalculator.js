@@ -13,11 +13,14 @@ const calculateDividendPayouts = (stakers, amountUSDC) => {
   }
 
   return {
-    amountUSDC,
+    amountUSDC: amountInMicroUSDC / USDC_SCALE,
+    totalShares,
+    totalDistributed: amountInMicroUSDC / USDC_SCALE,
     payouts: stakers.map((staker, index) => ({
       stakerId: staker.id,
       address: staker.address,
       shares: staker.shares,
+      percentage: staker.shares / totalShares * 100,
       amountUSDC: allocations[index] / USDC_SCALE
     }))
   };
