@@ -27,3 +27,17 @@ test('preserves six-decimal payouts below one cent', () => {
 
   assert.deepEqual(result.payouts.map(payout => payout.amountUSDC), [0.000001, 0.000003]);
 });
+
+test('conserves the requested amount when rounding is required', () => {
+  const result = calculateDividendPayouts([
+    { id: 1, address: 'GONE', shares: 1 },
+    { id: 2, address: 'GTWO', shares: 1 },
+    { id: 3, address: 'GTHREE', shares: 1 }
+  ], 10);
+  const distributedMicroUSDC = result.payouts.reduce(
+    (total, payout) => total + Math.round(payout.amountUSDC * 1_000_000),
+    0
+  );
+
+  assert.equal(distributedMicroUSDC, 10_000_000);
+});
