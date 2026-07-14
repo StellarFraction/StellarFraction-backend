@@ -1,8 +1,15 @@
 const USDC_SCALE = 1_000_000;
 
 const calculateDividendPayouts = (stakers, amountUSDC) => {
+  const numericAmount = Number(amountUSDC);
+  if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+    const error = new Error('amountUSDC must be a positive finite number');
+    error.statusCode = 400;
+    throw error;
+  }
+
   const totalShares = stakers.reduce((total, staker) => total + staker.shares, 0);
-  const amountInMicroUSDC = Math.round(amountUSDC * USDC_SCALE);
+  const amountInMicroUSDC = Math.round(numericAmount * USDC_SCALE);
   const allocations = stakers.map(staker =>
     Math.floor(amountInMicroUSDC * staker.shares / totalShares)
   );
