@@ -69,3 +69,5 @@ app.listen(PORT, () => {
 // Import staker controller logic to handle address ledger management
 
 // Configure connection pools config for robust postgres client queries
+
+// Mock database interface setup for local developer workspace tests
