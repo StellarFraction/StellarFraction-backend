@@ -35,17 +35,6 @@ const distributeDividends = (req, res) => {
     throw new Error('Property not found');
   }
 
-  // Create transaction log
-  const txHash = Math.random().toString(16).substring(2, 10) + Math.random().toString(16).substring(2, 10);
-  const newLog = {
-    id: db.getDividendHistory().length + 1,
-    timestamp: new Date().toISOString(),
-    amountUSDC: parseFloat(amountUSDC),
-    propertyId: parseInt(propertyId),
-    txHash
-  };
-  db.addDividendRecord(newLog);
-
   const stakers = db.getStakers();
   const calculation = calculateDividendPayouts(stakers, amountUSDC);
   const payoutsByStakerId = new Map(
@@ -55,6 +44,16 @@ const distributeDividends = (req, res) => {
     ...staker,
     usdcBalance: staker.usdcBalance + payoutsByStakerId.get(staker.id)
   }));
+
+  const txHash = Math.random().toString(16).substring(2, 10) + Math.random().toString(16).substring(2, 10);
+  const newLog = {
+    id: db.getDividendHistory().length + 1,
+    timestamp: new Date().toISOString(),
+    amountUSDC: calculation.amountUSDC,
+    propertyId: parseInt(propertyId),
+    txHash
+  };
+  db.addDividendRecord(newLog);
   db.updateStakers(stakersList);
 
   db.markTransactionProcessed(idempotencyKey);
