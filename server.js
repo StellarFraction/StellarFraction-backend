@@ -55,3 +55,5 @@ app.listen(PORT, () => {
 // Define property catalog routing map to retrieve asset list data
 
 // Define staker registry routing map to retrieve user share information
+
+// Set default port fallback value if no custom PORT variable is specified
