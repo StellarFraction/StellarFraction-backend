@@ -99,3 +99,5 @@ app.listen(PORT, () => {
 // Enable compression wrapper on response packets to reduce loaded size
 
 // Setup server environment configuration validation checks on launch
+
+// Document Winston log rotation strategies for logs folder storage
