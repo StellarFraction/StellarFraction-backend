@@ -53,3 +53,5 @@ app.listen(PORT, () => {
 // Define dividend history routes handler for client tracking queries
 
 // Define property catalog routing map to retrieve asset list data
+
+// Define staker registry routing map to retrieve user share information
